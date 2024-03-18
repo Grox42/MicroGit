@@ -2,19 +2,22 @@
 #define WRITER_H
 
 #include "monitoredfile.h"
-
+#include "windows.h"
 #include <QObject>
-#include  <QTextStream>
+#include <QVector>
 
 class Writer: public QObject
 {
     Q_OBJECT
 private:
-    const QString title[3] {"Path", "Status", "Size"};
+    QVector<QString> title { "index", "Name", "Status", "Size", "Path" };
+    HANDLE outHundle;
+    COORD pos;
 public:
     Writer(QObject *parent = nullptr);
+    QString sizeToString(qint64 size) const;
 public slots:
-    void printing(qint32 index, const MonitoredFile &monitoredFile);
+    void write(qint32 index, const MonitoredFile &monitoredFile);
 };
 
 #endif // WRITER_H
