@@ -3,6 +3,8 @@
 FileManager::FileManager(QObject *parent): QObject{parent}
 {
     timer = new QTimer(this);
+
+    connect(timer, &QTimer::timeout, this, &FileManager::checking);
 }
 
 void FileManager::start(qint32 mSec) const { timer->start(mSec); }
