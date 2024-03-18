@@ -8,7 +8,7 @@ class MonitoredFile: public QFileInfo
 {
 private:
     bool oldExists {false};
-    qint64 oldSize {0};
+    qint64 oldSize {-1};
 public:
     MonitoredFile(const QString &path);
     bool check();
