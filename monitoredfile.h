@@ -6,7 +6,6 @@
 
 class MonitoredFile: public QFileInfo
 {
-    Q_OBJECT
 private:
     bool oldExists {false};
     qint64 oldSize {0};
