@@ -5,15 +5,21 @@ ConsoleWriter::ConsoleWriter(QObject *parent): QObject{parent}
 {
     SetConsoleTitle(L"MicroGit");
 
+    HWND consoleWindow {GetConsoleWindow()};
+    MoveWindow(consoleWindow, 0, 0, 800, 400, TRUE);
+
+    HMENU systemMenu {GetSystemMenu(consoleWindow, FALSE)};
+    RemoveMenu(systemMenu, SC_SIZE, MF_BYCOMMAND | MF_REMOVE);
+    RemoveMenu(systemMenu, SC_MAXIMIZE, MF_BYCOMMAND | MF_REMOVE);
+    DrawMenuBar(consoleWindow);
+
     QVector<QString> title { "index", "Name", "Status", "Size", "Path" };
 
     QTextStream out(stdout);
     out << Qt::left;
-    for (qint32 i {0}; i < title.length(); i++)
+    for (qint32 i {0}; i < title.length() - 1; i++)
         out << qSetFieldWidth(sizes[i]) << title[i];
-    out << Qt::endl;
-
-    SetConsoleCursorPosition(hundle, {0, 1});
+    out << Qt::reset << title.last() << Qt::endl;
 }
 
 QString ConsoleWriter::sizeToString(qint64 size) const
@@ -45,6 +51,7 @@ void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
 
     QTextStream out(stdout);
     out << Qt::left;
-    for (qint32 i {0}; i < data.length(); i++)
+    for (qint32 i {0}; i < data.length() - 1; i++)
         out << qSetFieldWidth(sizes[i]) << data[i];
+    out << Qt::reset << data.last() << Qt::endl;
 }
