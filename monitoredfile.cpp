@@ -6,6 +6,8 @@ bool MonitoredFile::update()
 {
     bool isModified {false};
 
+    refresh();
+
     if (oldExists != exists()) {
         oldExists = !oldExists;
         isModified = true;
