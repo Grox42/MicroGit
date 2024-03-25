@@ -1,15 +1,6 @@
 #include "filemanager.h"
 
-FileManager::FileManager(QObject *parent): QObject{parent}
-{
-    timer = new QTimer(this);
-
-    connect(timer, &QTimer::timeout, this, &FileManager::checking);
-}
-
-void FileManager::start(qint32 mSec) const { timer->start(mSec); }
-
-void FileManager::stop() const { timer->stop(); }
+FileManager::FileManager(QObject *parent): QObject{parent} {}
 
 void FileManager::addFile(const QString &path)
 {
@@ -21,9 +12,9 @@ void FileManager::removeFile(qint32 index)
     files.removeAt(index);
 }
 
-void FileManager::checking()
+void FileManager::updateing()
 {
     for (qint32 i {0}; i < files.length(); i++)
-        if (files[i].check())
+        if (files[i].update())
             emit modified(i, files[i]);
 }

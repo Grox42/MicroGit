@@ -1,12 +1,8 @@
 #include "monitoredfile.h"
 
-MonitoredFile::MonitoredFile(const QString &path): QFileInfo(path)
-{
-    oldExists = exists();
-    oldSize = size();
-}
+MonitoredFile::MonitoredFile(const QString &path): QFileInfo(path) {}
 
-bool MonitoredFile::check()
+bool MonitoredFile::update()
 {
     bool isModified {false};
 

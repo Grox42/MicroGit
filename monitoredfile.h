@@ -11,7 +11,7 @@ private:
     qint64 oldSize {-1};
 public:
     MonitoredFile(const QString &path);
-    bool check();
+    bool update();
 };
 
 #endif // MONITOREDFILE_H
