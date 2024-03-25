@@ -11,8 +11,7 @@ ConsoleWriter::ConsoleWriter(QObject *parent): QObject{parent}
         out << qSetFieldWidth(sizes[i]) << title[i];
     out << Qt::endl;
 
-    pos = {0, 1};
-    SetConsoleCursorPosition(hundle, pos);
+    SetConsoleCursorPosition(hundle, {0, 1});
 }
 
 QString ConsoleWriter::sizeToString(qint64 size) const
@@ -32,11 +31,10 @@ QString ConsoleWriter::sizeToString(qint64 size) const
 
 void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
 {
-    pos = {0, static_cast<qint16>(index + 1)};
-    SetConsoleCursorPosition(hundle, pos);
+    SetConsoleCursorPosition(hundle, {0, static_cast<qint16>(index + 1)});
 
     QVector<QString> data {
-        QString().setNum(pos.Y),
+        QString().setNum(index + 1),
         monitoredFile.fileName(),
         monitoredFile.exists() ? "exists" : "not exist",
         sizeToString(monitoredFile.size()),
@@ -47,5 +45,4 @@ void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
     out << Qt::left;
     for (qint32 i {0}; i < data.length(); i++)
         out << qSetFieldWidth(sizes[i]) << data[i];
-    out << Qt::endl;
 }
