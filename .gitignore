@@ -3,6 +3,7 @@
 
 build*/
 resources/
+Logs.txt
 
 *~
 *.autosave
