@@ -4,14 +4,12 @@
 #include "monitoredfile.h"
 #include "windows.h"
 #include <QObject>
-#include <QVector>
 
 class ConsoleWriter: public QObject
 {
     Q_OBJECT
 private:
-    QVector<QString> title { "index", "Name", "Status", "Size", "Path" };
-    QVector<qint32> sizes {        6,     18,       12,     12,     60 };
+    QVector<qint32> sizes { 6, 18, 12, 12, 60 };
     HANDLE hundle {GetStdHandle(STD_OUTPUT_HANDLE)};
 public:
     ConsoleWriter(QObject *parent = nullptr);
