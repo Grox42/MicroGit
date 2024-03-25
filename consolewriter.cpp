@@ -3,18 +3,16 @@
 
 ConsoleWriter::ConsoleWriter(QObject *parent): QObject{parent}
 {
-    outHundle = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTitle(L"MicroGit");
 
     QTextStream out(stdout);
-    out.setFieldWidth(10);
     out << Qt::left;
-    for (qint32 i {0}; i < title.length() - 1; i++)
-        out << title[i];
-    out << qSetFieldWidth(40) << title[title.length() - 1] << Qt::endl;
+    for (qint32 i {0}; i < title.length(); i++)
+        out << qSetFieldWidth(sizes[i]) << title[i];
+    out << Qt::endl;
 
-    pos.X = 0;
-    pos.Y = 1;
-    SetConsoleCursorPosition(outHundle, pos);
+    pos = {0, 1};
+    SetConsoleCursorPosition(hundle, pos);
 }
 
 QString ConsoleWriter::sizeToString(qint64 size) const
@@ -34,15 +32,19 @@ QString ConsoleWriter::sizeToString(qint64 size) const
 
 void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
 {
-    pos.X = 0;
-    pos.Y = index + 1;
+    pos = {0, static_cast<qint16>(index + 1)};
+    SetConsoleCursorPosition(hundle, pos);
+
+    QVector<QString> data {
+        QString().setNum(pos.Y),
+        monitoredFile.fileName(),
+        monitoredFile.exists() ? "exists" : "not exist",
+        sizeToString(monitoredFile.size()),
+        monitoredFile.absolutePath()
+    };
 
     QTextStream out(stdout);
-    out.setFieldWidth(10);
     out << Qt::left;
-    out << pos.Y << monitoredFile.fileName() << (monitoredFile.exists() ? "exists" : "not exist");
-    QString size{sizeToString(monitoredFile.size())};
-    out << size;
-    out.setFieldWidth(40);
-    out << monitoredFile.absolutePath();
+    for (qint32 i {0}; i < data.length(); i++)
+        out << qSetFieldWidth(sizes[i]) << data[i];
 }

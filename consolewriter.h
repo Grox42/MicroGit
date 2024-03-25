@@ -11,8 +11,9 @@ class ConsoleWriter: public QObject
     Q_OBJECT
 private:
     QVector<QString> title { "index", "Name", "Status", "Size", "Path" };
-    HANDLE outHundle;
-    COORD pos;
+    QVector<qint32> sizes {       10,     10,       10,     10,     50 };
+    HANDLE hundle {GetStdHandle(STD_OUTPUT_HANDLE)};
+    COORD pos {0, 0};
 public:
     ConsoleWriter(QObject *parent = nullptr);
     QString sizeToString(qint64 size) const;
