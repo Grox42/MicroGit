@@ -25,9 +25,9 @@ QString ConsoleWriter::sizeToString(qint64 size) const
         index++;
     }
     if (index > -1 && index < 6)
-        return QString().setNum(newSize, 'g', 1) + prefix[index] + 'b';
+        return QString().setNum(newSize, 'd', 1) + ' ' + prefix[index] + 'b';
     else
-        return QString().setNum(newSize, 'g', 1) + 'b';
+        return QString().setNum(newSize, 'd', 1) + " b";
 }
 
 void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
@@ -47,4 +47,5 @@ void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
     out << Qt::left;
     for (qint32 i {0}; i < data.length(); i++)
         out << qSetFieldWidth(sizes[i]) << data[i];
+    out << Qt::endl;
 }
