@@ -1,7 +1,7 @@
-#include "writer.h"
+#include "consolewriter.h"
 #include <QTextStream>
 
-Writer::Writer(QObject *parent): QObject{parent}
+ConsoleWriter::ConsoleWriter(QObject *parent): QObject{parent}
 {
     outHundle = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -17,7 +17,7 @@ Writer::Writer(QObject *parent): QObject{parent}
     SetConsoleCursorPosition(outHundle, pos);
 }
 
-QString Writer::sizeToString(qint64 size) const
+QString ConsoleWriter::sizeToString(qint64 size) const
 {
     char prefix[] { 'K', 'M', 'G', 'T', 'P', 'E' };
     qint32 index = -1;
@@ -32,7 +32,7 @@ QString Writer::sizeToString(qint64 size) const
         return QString().setNum(newSize, 'g', 1) + 'b';
 }
 
-void Writer::write(qint32 index, const MonitoredFile &monitoredFile)
+void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
 {
     pos.X = 0;
     pos.Y = index + 1;
