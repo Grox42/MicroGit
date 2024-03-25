@@ -5,6 +5,8 @@ ConsoleWriter::ConsoleWriter(QObject *parent): QObject{parent}
 {
     SetConsoleTitle(L"MicroGit");
 
+    QVector<QString> title { "index", "Name", "Status", "Size", "Path" };
+
     QTextStream out(stdout);
     out << Qt::left;
     for (qint32 i {0}; i < title.length(); i++)
@@ -34,7 +36,7 @@ void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
     SetConsoleCursorPosition(hundle, {0, static_cast<qint16>(index + 1)});
 
     QVector<QString> data {
-        QString().setNum(index + 1),
+        QString().setNum(index),
         monitoredFile.fileName(),
         monitoredFile.exists() ? "exists" : "not exist",
         sizeToString(monitoredFile.size()),
