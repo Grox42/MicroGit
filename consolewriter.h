@@ -9,7 +9,7 @@ class ConsoleWriter: public QObject
 {
     Q_OBJECT
 private:
-    QVector<qint32> sizes { 6, 18, 12, 12, 60 };
+    QVector<qint32> sizes { 6, 18, 12, 12 };
     HANDLE hundle {GetStdHandle(STD_OUTPUT_HANDLE)};
 public:
     ConsoleWriter(QObject *parent = nullptr);
