@@ -3,7 +3,6 @@
 
 #include "monitoredfile.h"
 #include <QObject>
-#include <QTimer>
 #include <QVector>
 
 class FileManager: public QObject
