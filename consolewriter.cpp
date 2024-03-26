@@ -5,14 +5,6 @@ ConsoleWriter::ConsoleWriter(QObject *parent): QObject{parent}
 {
     SetConsoleTitle(L"MicroGit");
 
-    HWND consoleWindow {GetConsoleWindow()};
-    MoveWindow(consoleWindow, 0, 0, 800, 400, TRUE);
-
-    HMENU systemMenu {GetSystemMenu(consoleWindow, FALSE)};
-    RemoveMenu(systemMenu, SC_SIZE, MF_BYCOMMAND | MF_REMOVE);
-    RemoveMenu(systemMenu, SC_MAXIMIZE, MF_BYCOMMAND | MF_REMOVE);
-    DrawMenuBar(consoleWindow);
-
     QVector<QString> title { "index", "Name", "Status", "Size", "Path" };
 
     QTextStream out(stdout);
@@ -46,7 +38,7 @@ void ConsoleWriter::write(qint32 index, const MonitoredFile &monitoredFile)
         monitoredFile.fileName(),
         monitoredFile.exists() ? "exists" : "not exist",
         sizeToString(monitoredFile.size()),
-        monitoredFile.absolutePath()
+        monitoredFile.filePath()
     };
 
     QTextStream out(stdout);
