@@ -10,12 +10,10 @@ FileManager& FileManager::getInstance()
 
 qint32 FileManager::search(const QString &path) const
 {
-    Fileinfo newFile(path);
-
+    QFileInfo newFile(path);
     for (qint32 i {0}; i < files.length(); i++)
         if (files[i].absoluteFilePath() == newFile.absoluteFilePath())
             return i;
-
     return -1;
 }
 
