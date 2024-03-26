@@ -2,14 +2,34 @@
 
 FileManager::FileManager(QObject *parent): QObject{parent} {}
 
-void FileManager::addFile(const QString &path)
+FileManager& FileManager::getInstance()
 {
-    files.append(MonitoredFile(path));
+    static FileManager instance;
+    return instance;
 }
 
-void FileManager::removeFile(qint32 index)
+qint32 FileManager::search(const QString &path) const
 {
-    files.removeAt(index);
+    Fileinfo newFile(path);
+
+    for (qint32 i {0}; i < files.length(); i++)
+        if (files[i].absoluteFilePath() == newFile.absoluteFilePath())
+            return i;
+
+    return -1;
+}
+
+void FileManager::addFile(const QString &path)
+{
+    if (search(path) < 0)
+        files.append(MonitoredFile(path));
+}
+
+void FileManager::removeFile(const QString &path)
+{
+    qint32 index {search(path)};
+    if (index >= 0)
+        files.removeAt(index);
 }
 
 void FileManager::updateing()
