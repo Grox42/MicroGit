@@ -10,10 +10,12 @@ class FileManager: public QObject
     Q_OBJECT
 private:
     QVector<MonitoredFile> files;
-public:
+    qint32 search(const QString &path) const;
     FileManager(QObject *parent = nullptr);
+public:
+    static FileManager& getInstance();
     void addFile(const QString &path);
-    void removeFile(qint32 index);
+    void removeFile(const QString &path);
 signals:
     void modified(qint32 index, const MonitoredFile &monitoredFile);
 public slots:
