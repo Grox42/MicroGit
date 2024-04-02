@@ -14,8 +14,8 @@ private:
     FileManager(QObject *parent = nullptr);
 public:
     static FileManager& getInstance();
-    void addFile(const QString &path);
-    void removeFile(const QString &path);
+    bool addFile(const QString &path);
+    bool removeFile(const QString &path);
 signals:
     void modified(qint32 index, const MonitoredFile &monitoredFile);
 public slots:

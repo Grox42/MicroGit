@@ -17,17 +17,23 @@ qint32 FileManager::search(const QString &path) const
     return -1;
 }
 
-void FileManager::addFile(const QString &path)
+bool FileManager::addFile(const QString &path)
 {
-    if (search(path) < 0)
-        files.append(MonitoredFile(path));
+    if (search(path) >= 0)
+        return false;
+
+    files.append(MonitoredFile(path));
+    return true;
 }
 
-void FileManager::removeFile(const QString &path)
+bool FileManager::removeFile(const QString &path)
 {
     qint32 index {search(path)};
-    if (index >= 0)
-        files.removeAt(index);
+    if (index < 0)
+        return false;
+
+    files.removeAt(index);
+    return true;
 }
 
 void FileManager::updateing()
